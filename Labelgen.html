@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi Pallet ID Label Generator</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="labelgen.css" />
+</head>
+<body>
+    <body>
+
+        <div class="container">
+          <h1>Multi Pallet ID Label Generator</h1>
+          <p>Enter one 9-digit code per line (Max 20 labels)</p>
+          <div class="mb-4">
+            <input type="file" id="excelFile" accept=".xlsx, .xls" class="form-control w-auto d-inline-block me-2" />
+            <button onclick="importFromExcel()">Import Excel</button>
+            <button onclick="generateQRCodes()">Generate</button>
+            <button onclick="downloadAllCodes()">Download PNG</button>
+            <button onclick="generatePDFA4()">PDF A4</button>
+            <button onclick="generatePDF()">PDF Label</button>
+          </div>
+          
+             
+      
+          <div class="mb-4">
+            <label class="form-label">Code List</label>
+            <textarea id="qrInput" class="form-control" placeholder="Line 1: Code-1&#10;Line 2: Code-2"></textarea>
+          </div>
+          
+          <div class="row g-3 mb-4">
+          <div class="col-md-2">
+            <label class="form-label">Name Label:</label>
+            <input type="text" class="form-control" id="nameText" placeholder="Name">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">X (mm)</label>
+            <input type="number" class="form-control" id="nameTextX" value="13">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Y (mm)</label>
+            <input type="number" class="form-control" id="nameTextY" value="-12">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Code Size (px)</label>
+            <input type="number" class="form-control" id="nametextSize" value="22">
+          </div>
+          </div>
+      
+          <div class="row g-3 mb-4">
+            <div class="col-md-2">
+              <label class="form-label">Description:</label>
+              <input type="text" class="form-control" id="desText" placeholder="Description">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">X (mm)</label>
+              <input type="number" class="form-control" id="desTextX" value="-42">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Y (mm)</label>
+              <input type="number" class="form-control" id="desTextY" value="-12">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Text Size (px)</label>
+              <input type="number" class="form-control" id="destextSize" value="22">
+            </div>
+            </div>
+      
+            <div class="row g-3 mb-4">
+              <div class="col-md-2">
+                <label class="form-label">Date:</label>
+                <input type="date" class="form-control" id="date" placeholder="Date">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">X (mm)</label>
+                <input type="number" class="form-control" id="dateX" value="4">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Y (mm)</label>
+                <input type="number" class="form-control" id="dateY" value="50">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Text Size (px)</label>
+                <input type="number" class="form-control" id="datetextSize" value="22">
+              </div>
+              </div>
+             
+      
+          <div class="row g-3 mb-4">
+            <div class="col-md-2">
+              <label class="form-label">Label Width (mm)</label>
+              <input type="number" class="form-control" id="labelWidth" value="100">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Label Height (mm)</label>
+              <input type="number" class="form-control" id="labelHeight" value="75">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">QR Size (mm)</label>
+              <input type="number" class="form-control" id="qrSize" value="160">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">QR X (mm)</label>
+              <input type="number" class="form-control" id="qrX" value="49">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">QR Y (mm)</label>
+              <input type="number" class="form-control" id="qrY" value="12">
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Barcode Width</label>
+              <input type="number" class="form-control" id="barcodeWidth" value="1.9">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Barcode Height (mm)</label>
+              <input type="number" class="form-control" id="barcodeHeight" value="110">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Barcode Rotation</label>
+              <select class="form-select" id="barcodeRotation">
+                <option value="0">0°</option>
+                <option value="90" selected>90°</option>
+                <option value="180">180°</option>
+                <option value="270">270°</option>
+              </select>
+            </div>
+      
+            <div class="col-md-2">
+              <label class="form-label">Barcode X (mm)</label>
+              <input type="number" class="form-control" id="barcodeX" value="-6">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Barcode Y (mm)</label>
+              <input type="number" class="form-control" id="barcodeY" value="26">
+            </div>
+          </div>
+      
+            <div class="row g-3 mb-4">
+            <div class="col-md-2">
+              <label class="form-label">Code Size (px)</label>
+              <input type="number" class="form-control" id="textSize" value="22">
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label">Code X (mm)</label>
+              <input type="number" class="form-control" id="textX" value="-10">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Code Y (mm)</label>
+              <input type="number" class="form-control" id="textY" value="57">
+            </div>
+          </div>
+          
+          <div class="col-md-2">
+            <label class="form-check-label">Show Elements</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="showQRCode" checked>
+              <label class="form-check-label" for="showQRCode">QR Code</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="showBarcode" checked>
+              <label class="form-check-label" for="showBarcode">Barcode</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="showText" checked>
+              <label class="form-check-label" for="showText">Text</label>
+            </div>
+            <button onclick="generateQRCodes()">Generate</button>
+          </br>
+          </div>
+      
+          <div class="qr-container" id="qrContainer"></div>
+        </div>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Custom Script -->
+  <script src="labelgen.js"></script>
+</body>
+</html>
